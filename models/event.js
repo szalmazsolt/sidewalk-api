@@ -13,6 +13,34 @@ const eventSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  startsAt: {
+    type: Date,
+    // required: true
+  },
+  endsAt: {
+    type: Date,
+    // required: true
+  },
+  organizer: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  price: {
+    type: Number,
+    default: 0.0
+  },
+  capacity: {
+    type: Number,
+  },
+  requiresRegistration: {
+    type: Boolean,
+    default: false
+  },
+  cancelled: {
+    type: Boolean,
+    default: false
+  },
   createdAt: {
     type: Date,
   },

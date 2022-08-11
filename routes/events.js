@@ -1,10 +1,13 @@
 const router = require('express').Router();
+const { isValidObjectId } = require('mongoose');
 const Event = require('../models/event');
 const CustomError = require('../errors/CustomError');
 
 
 const objectRepository = {
-  Event, CustomError
+  Event, 
+  CustomError,
+  isValidObjectId
 };
 
 const getEventsMW = 

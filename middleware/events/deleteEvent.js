@@ -1,8 +1,13 @@
 module.exports = (objRepo) => {
-  const { Event, CustomError } = objRepo;
+  const { Event, CustomError, isValidObjectId } = objRepo;
 
   return async (req, res, next) => {
     const { id } = req.params;
+
+    if (!isValidObjectId(id)) {
+      const error = new CustomError('Invalid id format', 400);
+      return next(error);
+    }
     
     const event = await Event.findOneAndDelete({ _id: id });
     if (event === null) {

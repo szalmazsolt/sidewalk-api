@@ -3,6 +3,12 @@ module.exports = (objRepo) => {
 
   return async (req, res, next) => {
     const { id } = req.params;
+
+    if (!isValidObjectId(id)) {
+      const error = new CustomError('Invalid id format', 400);
+      return next(error);
+    }
+    
     const permitted_attributes = ['name', 'location'];
     let updateIsValid = true;
    
