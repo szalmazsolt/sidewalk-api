@@ -6,7 +6,10 @@ const eventSchema = new mongoose.Schema({
     default: 'Távcsöves csillagászati bemutató',
     trim: true,
     minLength: [3, 'must be at least 3 characters'],
-    maxLength: [50, 'cannot be more than 50 characters']
+    maxLength: [100, 'cannot be more than 50 characters']
+  },
+  description: {
+    type: String
   },
   location: {
     type: String,
@@ -21,11 +24,50 @@ const eventSchema = new mongoose.Schema({
     type: Date,
     // required: true
   },
+  objects: {
+    type: String,
+    enum: [
+      'Hold',
+      'Nap',
+      'Merkúr',
+      'Vénusz',
+      'Mars',
+      'Jupiter',
+      'Szaturnusz',
+      'Uránusz',
+      'Neptunusz',
+      'kisbolygók',
+      'üstökösök',
+      'hullócsillagok',
+      'kettőscsillagok',
+      'változócsillagok',
+      'csillaghalmazok',
+      'galaxisok'
+    ]
+  },
   organizer: {
     type: String,
     required: true,
     trim: true
   },
+  contacts: [
+    {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      lowercase: true,
+      trim: true,
+    },
+    phone: {
+      type: String,
+      trim: true
+    }
+    }
+],
   price: {
     type: Number,
     default: 0.0
@@ -41,11 +83,17 @@ const eventSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  published: {
+    type: Boolean,
+    default: false
+  },
   createdAt: {
     type: Date,
+    default: Date.now
   },
   updatedAt: {
     type: Date,
+    default: Date.now
   }
 });
 

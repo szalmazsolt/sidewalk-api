@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-
 const noRouteMW = require('./middleware/noRoute');
 const errorHandlerMW = require('./middleware/errorHandler');
 
@@ -11,9 +10,10 @@ const connectDB = require('./db/connect');
 
 app.use(express.json());
 
-const port = process.env.PORT || 3000;
 
 const startApp = async () => {
+
+  const port = process.env.PORT || 3000;
 
   const { 
     MONGODB_USERNAME,
@@ -24,8 +24,11 @@ const startApp = async () => {
 
   try {
     await connectDB(`mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@${MONGODB_URI}/${MONGODB_DB_NAME}?retryWrites=true&w=majority`);
+
     console.log('Connected to MongoDB remote server...');
+
     app.listen(port, '127.0.0.1', console.log(`WebServer is listening on PORT ${port}...`));
+
     app.use('/api/v1/events', require('./routes/events'));
     app.use('*', noRouteMW);
     app.use(errorHandlerMW);
