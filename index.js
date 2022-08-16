@@ -1,21 +1,23 @@
 const express = require('express');
-const app = express();
 const noRouteMW = require('./middleware/noRoute');
 const errorHandlerMW = require('./middleware/errorHandler');
 const { isValidObjectId } = require('mongoose');
 const Event = require('./models/event');
+const Organizer = require('./models/organizer');
 const CustomError = require('./errors/CustomError');
+const connectDB = require('./db/connect');
+
+const app = express();
 
 // this puts the content of the .env file to the environment variables
 require('dotenv').config();
-
-const connectDB = require('./db/connect');
 
 app.use(express.json());
 
 const objectRepository = {
   isValidObjectId,
   Event,
+  Organizer,
   CustomError
 };
 

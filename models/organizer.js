@@ -26,13 +26,13 @@ const organizerSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    maxLength: 500,
+    maxLength: 1000,
     trim: true
   },
   website: {
     type: String,
     trim: true,
-    maxLength: 150,
+    maxLength: 200,
     validate(value) {
       if (!isURL(value)) throw new Error('Website URL is invalid');
     }
