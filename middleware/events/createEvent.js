@@ -2,19 +2,8 @@ module.exports = (objRepo) => {
   const { Event } = objRepo;
   
   return async (req, res, next) => {
-    const { name, location, organizer, description, price, objects, requiresRegistration } = req.body;
-
-    res.locals.event = await Event.create({
-      name,
-      location,
-      organizer,
-      description,
-      price,
-      objects,
-      requiresRegistration,
-      createdAt: Date.now()
-    });
-
+    const event = await Event.create(req.body);
+    res.locals = event;
     next();
   };
 };

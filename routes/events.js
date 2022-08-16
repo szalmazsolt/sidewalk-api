@@ -1,15 +1,9 @@
 const router = require('express').Router();
-const { isValidObjectId } = require('mongoose');
-const Event = require('../models/event');
-const CustomError = require('../errors/CustomError');
 
+// importing dependences
+const objectRepository = require('../index');
 
-const objectRepository = {
-  Event, 
-  CustomError,
-  isValidObjectId
-};
-
+// Importing middleware for event resource
 const getEventsMW = 
   require('../middleware/events/getEvents')(objectRepository);
 const createEventMW = 
@@ -22,18 +16,46 @@ const deleteEventMW =
   require('../middleware/events/deleteEvent')(objectRepository);
 const renderMW =
   require('../middleware/events/render');
-const asyncWrapper = require('../middleware/asyncWrapper');
+const asyncWrapper = 
+  require('../middleware/asyncWrapper');
+const checkObjectIdMW = 
+  require('../middleware/checkObjectId')(objectRepository);
+const validEventAttributesMW = 
+  require('../middleware/events/validEventAttributes')(objectRepository);
+const eventExistsMW = 
+  require('../middleware/events/eventExists')(objectRepository);
 
 router.route('/')
-  .get(asyncWrapper(getEventsMW), renderMW)
-  .post(asyncWrapper(createEventMW), renderMW);
+  .get(
+    asyncWrapper(getEventsMW),
+    renderMW
+  )
+  .post(
+    validEventAttributesMW,
+    asyncWrapper(createEventMW),
+    renderMW
+  );
 
 router.route('/:id')
-  .get(asyncWrapper(getEventMW), renderMW)
-  .patch(asyncWrapper(updateEventMW), renderMW)
-  .delete(asyncWrapper(deleteEventMW), renderMW);
+  .get(
+    checkObjectIdMW,
+    asyncWrapper(getEventMW),
+    eventExistsMW,
+    renderMW
+  )
+  .patch(
+    checkObjectIdMW,
+    validEventAttributesMW,
+    asyncWrapper(updateEventMW),
+    eventExistsMW,
+    renderMW
+  )
+  .delete(
+    checkObjectIdMW,
+    asyncWrapper(deleteEventMW),
+    eventExistsMW,
+    renderMW
+  );
 
-// router.route('*')
-//   .get(notFoundMW, renderMW);
 
 module.exports = router;

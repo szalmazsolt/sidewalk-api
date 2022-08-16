@@ -24,27 +24,6 @@ const eventSchema = new mongoose.Schema({
     type: Date,
     // required: true
   },
-  objects: {
-    type: String,
-    enum: [
-      'Hold',
-      'Nap',
-      'Merkúr',
-      'Vénusz',
-      'Mars',
-      'Jupiter',
-      'Szaturnusz',
-      'Uránusz',
-      'Neptunusz',
-      'kisbolygók',
-      'üstökösök',
-      'hullócsillagok',
-      'kettőscsillagok',
-      'változócsillagok',
-      'csillaghalmazok',
-      'galaxisok'
-    ]
-  },
   organizer: {
     type: String,
     required: true,
