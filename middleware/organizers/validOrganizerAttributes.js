@@ -9,15 +9,17 @@ const validOrganizerAttributes = (objRepo) => {
       'description',
       'website'
     ];
-  
-    const validAttributes = Object.keys(req.body).every(key => permittedAttributes.includes(key));
+    
+    const updates = Object.keys(req.body);
+    const validAttributes = updates.every(key => permittedAttributes.includes(key));
   
     if (!validAttributes) {
       const error = new CustomError('Forbidden attributes for Organizer', 400);
       return next(error);
     }
-  
-    next();
+    
+    res.locals.updates = updates;
+    return next();
   };
 };
 

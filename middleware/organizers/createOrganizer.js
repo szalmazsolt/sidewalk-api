@@ -2,7 +2,8 @@ const createOrganizer = (objRepo) => {
   const { Organizer } = objRepo;
 
   return async (req, res, next) => {
-    const organizer = await Organizer.create(req.body);
+    const organizer = new Organizer(req.body);
+    await organizer.save();
     res.locals.organizer = organizer;
     return next();
   };

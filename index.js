@@ -6,6 +6,7 @@ const Event = require('./models/event');
 const Organizer = require('./models/organizer');
 const CustomError = require('./errors/CustomError');
 const connectDB = require('./db/connect');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 
@@ -18,7 +19,8 @@ const objectRepository = {
   isValidObjectId,
   Event,
   Organizer,
-  CustomError
+  CustomError,
+  bcrypt
 };
 
 
@@ -53,6 +55,19 @@ const startApp = async () => {
 };
 
 startApp();
+
+// const hashPassw = async (passw) => {
+//   const salt = await bcrypt.genSalt(10);
+//   const hashedPassw = await bcrypt.hash(passw, salt);
+
+//   console.log(passw);
+//   console.log(hashedPassw)
+
+//   const passwordsMatch = await bcrypt.compare(passw, hashedPassw);
+//   console.log(passwordsMatch);
+// };
+
+// hashPassw('secret');
 
 module.exports = objectRepository;
 
