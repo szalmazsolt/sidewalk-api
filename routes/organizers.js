@@ -7,6 +7,7 @@ const getOrganizersMW =
   require('../middleware/organizers/getOrganizers')(objectRepository);
 const getOrganizerMW = 
   require('../middleware/organizers/getOrganizer')(objectRepository);
+const getOrganizerByCredentialsMW = require('../middleware/organizers/getOrganizerByCredentials')(objectRepository);
 const updateOrganizerMW = 
   require('../middleware/organizers/updateOrganizer')(objectRepository);
 const deleteOrganizerMW = 
@@ -31,6 +32,12 @@ router.route('/')
     asyncWrapper(createOrganizerMW),
     renderMW
   );
+
+router.route('/login')
+    .post(
+      asyncWrapper(getOrganizerByCredentialsMW),
+      renderMW
+    )
 
 router.route('/:id')
     .get(
